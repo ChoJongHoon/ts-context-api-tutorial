@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/ts-context-api-tutorial/static/css/main.d2369805.chunk.css",
+    "main.js": "/ts-context-api-tutorial/static/js/main.02387ee0.chunk.js",
+    "main.js.map": "/ts-context-api-tutorial/static/js/main.02387ee0.chunk.js.map",
+    "runtime-main.js": "/ts-context-api-tutorial/static/js/runtime-main.e298b1d4.js",
+    "runtime-main.js.map": "/ts-context-api-tutorial/static/js/runtime-main.e298b1d4.js.map",
+    "static/js/2.bd5235b7.chunk.js": "/ts-context-api-tutorial/static/js/2.bd5235b7.chunk.js",
+    "static/js/2.bd5235b7.chunk.js.map": "/ts-context-api-tutorial/static/js/2.bd5235b7.chunk.js.map",
+    "index.html": "/ts-context-api-tutorial/index.html",
+    "precache-manifest.66d5f15a305bc94b7548d8a6acb56ed8.js": "/ts-context-api-tutorial/precache-manifest.66d5f15a305bc94b7548d8a6acb56ed8.js",
+    "service-worker.js": "/ts-context-api-tutorial/service-worker.js",
+    "static/css/main.d2369805.chunk.css.map": "/ts-context-api-tutorial/static/css/main.d2369805.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e298b1d4.js",
+    "static/js/2.bd5235b7.chunk.js",
+    "static/css/main.d2369805.chunk.css",
+    "static/js/main.02387ee0.chunk.js"
+  ]
+}
