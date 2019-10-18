@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, useReducer } from "react";
+import React, { createContext, Dispatch, useReducer, useContext } from "react";
 
 export type Todo = {
   id: number;
@@ -70,4 +70,16 @@ export function TodosContextProvider({
       </TodosStateContext.Provider>
     </TodosDispatchContext.Provider>
   );
+}
+
+export function useTodosState() {
+  const state = useContext(TodosStateContext);
+  if (!state) throw new Error("TodosProvider not found");
+  return state;
+}
+
+export function useTodosDispatch() {
+  const dispatch = useContext(TodosDispatchContext);
+  if (!dispatch) throw new Error("TodosProvider not found");
+  return dispatch;
 }

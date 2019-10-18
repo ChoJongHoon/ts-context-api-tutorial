@@ -137,3 +137,42 @@ export function TodosContextProvider({ children }: { children: React.ReactNode }
   );
 }
 ```
+
+## 커스텀 Hooks 두 개 작성하기
+
+우리가 추후 TodosStateContext와 TodosDispatchContext를 사용하게 될 때는 다음과 같이 `useContext`를 사용해서 Context 안의 값을 사용 할 수 있습니다.
+
+```tsx
+const todos = useContext(TodosStateContext);
+```
+
+그런데 이 때 `todos` 의 타입은 `TodosState | undefined` 일 수 도 있습니다. 따라서, 해당 배열을 사용하기 전에 꼭 해당 값이 유효한지 확인을 해주어야 하죠.
+
+```tsx
+const todos = useContext(TodosStateContext);
+if (!todo) return null;
+```
+
+그렇게 해도 상관은 없지만.. 더 좋은 방법은 TodosContext 전용 Hooks를 작성해서 조금 더 편리하게 사용하는 것 입니다. 다음과 같이 코드를 작성하면 추후 상태 또는 디스패치를 더욱 편하게 이용 할 수도 있고, 컴포너트에서 사용 할 때 유효성 검사도 생략 할 수 있습니다.
+
+**src/contexts/TodosContext.tsx**
+
+```tsx
+import React, { createContext, Dispatch, useReducer, useContext } from 'react';
+
+(...)
+
+export function useTodosState() {
+  const state = useContext(TodosStateContext);
+  if (!state) throw new Error('TodosProvider not found');
+  return state;
+}
+
+export function useTodosDispatch() {
+  const dispatch = useContext(TodosDispatchContext);
+  if (!dispatch) throw new Error('TodosProvider not found');
+  return dispatch;
+}
+```
+
+이렇게 만약 함수 내부에서 필요한 값이 유효하지 않다면 에러를 `throw` 하여 각 Hook이 반환하는 값의 타입은 언제나 유효하다는 것을 보장 받을 수 있습니다. (만약 유효하지 않다면 브라우저의 콘솔에 에러가 바로 나타납니다.)
