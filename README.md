@@ -176,3 +176,68 @@ export function useTodosDispatch() {
 ```
 
 이렇게 만약 함수 내부에서 필요한 값이 유효하지 않다면 에러를 `throw` 하여 각 Hook이 반환하는 값의 타입은 언제나 유효하다는 것을 보장 받을 수 있습니다. (만약 유효하지 않다면 브라우저의 콘솔에 에러가 바로 나타납니다.)
+
+# 컴포넌트에서 Context 사용하기
+
+## TodosContextProvider로 감싸기
+
+```tsx
+import React from "react";
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
+import { TodosContextProvider } from "./contexts/TodosContext";
+
+const App = () => {
+  return (
+    <TodosContextProvider>
+      <TodoForm />
+      <TodoList />
+    </TodosContextProvider>
+  );
+};
+
+export default App;
+```
+
+## TodoList 에서 상태 조회하기
+
+**src/components/TodoList.tsx**
+
+```tsx
+import React from "react";
+import TodoItem from "./TodoItem";
+import { useTodosState } from "../contexts/TodosContext";
+
+function TodoList() {
+  const todos = useTodosState();
+  return (
+    <ul>
+      {todos.map(todo => (
+        <TodoItem todo={todo} key={todo.id} />
+      ))}
+    </ul>
+  );
+}
+
+export default TodoList;
+```
+
+그냥 `useTodosState` 를 불러와서 호출하기만 하면 현재 상태를 조회 할 수 있답니다.
+
+## TodoForm 에서 새 항목 등록하기
+
+이제 TodoForm 에서 새 항목을 등록하는 작업을 구현해봅시다. `useTodosDispatch` Hook 을 통해 `dispatch` 함수를 받아오고, 액션을 디스패치해보세요.
+
+**src/components/TodoForm.tsx**
+
+## TodoItem 에서 항목 토글 및 제거하기
+
+아마 일반적으로 Context를 사용하지 않는 환경에서는 TodoItem 컴포넌트에서 `onToggle`, `onRemove` props 를 가져와서 이를 호출하는 형태로 구현 할 것 입니다. 하지만 지금과 같이 Context를 사용하고 있다면 굳이 이 함수들을 props를 통해서 가져오지 않고, 이 컴포넌트 내부에서 바로 액션을 디스패치하는 것도 꽤나 괜찮은 방법입니다.
+
+**src/components/TodoItem.tsx**
+
+# 정리
+
+이번 튜토리얼에서는 우리가 타입스크립트 환경에서 리액트의 Context API를 효과적으로 활용하는 방법에 대해서 알아보았습니다. Context API를 사용하여 상태를 관리 할 때 useReducer를 사용하고 상태 전용 Context 와 디스패치 함수 전용 Context를 만들면 매우 유용합니다. 추가적으로, Context를 만들고 나서 해당 Context를 쉽게 사용 할 수 있는 커스텀 Hooks를 작성하면 더욱 편하게 개발을 하실 수 있습니다.
+
+이 튜토리얼에서 사용하는 방식은 꽤나 편한 방식이지만 무조건 정답은 아닙니다.
